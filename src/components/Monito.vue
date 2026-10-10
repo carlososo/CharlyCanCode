@@ -20,16 +20,17 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
           Silla (detrás del cuerpo): headrest + respaldo cápsula + asiento óvalo.
           Anchos: headrest ≈ respaldo; asiento ≤ torso → sin lóbulos laterales.
         -->
-        <rect x="122" y="108" width="36" height="100" rx="18" fill="#2584bc" />
-        <rect x="128" y="116" width="24" height="84" rx="12" fill="#1a5f8a" />
-        <rect x="118" y="90" width="44" height="26" rx="11" fill="#1e6f9f" />
-        <rect x="124" y="96" width="32" height="12" rx="6" fill="#ff7a59" />
+        <!-- Respaldo estrecho (≤ hombros) para no crear lóbulos laterales -->
+        <rect x="128" y="108" width="24" height="100" rx="12" fill="#2584bc" />
+        <rect x="132" y="116" width="16" height="84" rx="8" fill="#1a5f8a" />
+        <rect x="122" y="90" width="36" height="26" rx="11" fill="#1e6f9f" />
+        <rect x="126" y="96" width="28" height="12" rx="6" fill="#ff7a59" />
 
-        <!-- Asiento bajo el torso, mismo ancho aproximado (sin orejas) -->
-        <ellipse cx="140" cy="244" rx="20" ry="10" fill="#1e6f9f" />
+        <!-- Asiento óvalo simple, no más ancho que el torso -->
+        <ellipse cx="140" cy="244" rx="18" ry="9" fill="#1e6f9f" />
 
-        <!-- Torso suave, sin picos de hombro -->
-        <ellipse cx="140" cy="200" rx="24" ry="32" fill="#3d2918" />
+        <!-- Torso suave -->
+        <ellipse cx="140" cy="200" rx="26" ry="34" fill="#3d2918" />
         <ellipse cx="140" cy="208" rx="18" ry="22" fill="#4a3220" />
 
         <!-- Una sola masa de pelo (un fill); orejas a media altura -->
