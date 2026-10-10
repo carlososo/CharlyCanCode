@@ -84,7 +84,7 @@ const windows = [
 
 <style scoped>
 .monitor {
-  width: min(75vw, 1100px);
+  width: 85vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,7 +92,7 @@ const windows = [
 
 .monitor__bezel {
   width: 100%;
-  height: min(60vh, 520px);
+  height: 40vh;
   background: linear-gradient(180deg, #3a4654 0%, #243041 100%);
   border-radius: 18px;
   padding: 14px 16px 18px;
@@ -283,11 +283,11 @@ const windows = [
 
 @media (max-width: 700px) {
   .monitor {
-    width: min(92vw, 1100px);
+    width: 85vw;
   }
 
   .monitor__bezel {
-    height: min(48vh, 360px);
+    height: 40vh;
     padding: 10px 10px 12px;
     border-radius: 14px;
   }

@@ -30,6 +30,6 @@ npm run type-check
 ## Escena (v1)
 
 - Fondo atmosférico azul suave
-- Monitor ~75vw × ~60vh con ventanas a **Sobre mí**, **Proyectos** y **Contacto**
+- Monitor ~85vw × ~40vh con ventanas a **Sobre mí**, **Proyectos** y **Contacto**
 - Personaje SVG de espaldas; idle mirando el monitor; el puntero actúa como distracción
 - En móvil: composición legible + balanceo idle si no hay ratón
