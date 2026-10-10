@@ -8,7 +8,7 @@ function lerp(from: number, to: number, amount: number) {
   return from + (to - from) * amount
 }
 
-/** Smooth head/hair motion: idle at monitor, look toward pointer, return. */
+/** Snappy head/hair motion: idle + look toward pointer. */
 export function useHeadTracking(anchor: Ref<HTMLElement | null>) {
   const rotateY = ref(0)
   const rotateX = ref(0)
@@ -23,17 +23,27 @@ export function useHeadTracking(anchor: Ref<HTMLElement | null>) {
   let frame = 0
   let lastPointerAt = 0
 
-  function onPointerMove(event: PointerEvent) {
+  // Cache layout — avoid getBoundingClientRect on every pointermove (layout thrash).
+  let headX = 0
+  let headY = 0
+  let scaleX = 1
+  let scaleY = 1
+
+  function refreshAnchorMetrics() {
     const el = anchor.value
     if (!el) return
+    const rect = el.getBoundingClientRect()
+    headX = rect.left + rect.width * 0.5
+    headY = rect.top + rect.height * 0.22
+    scaleX = 1 / Math.max(rect.width * 0.55, 1)
+    scaleY = 1 / Math.max(rect.height * 0.7, 1)
+  }
 
+  function onPointerMove(event: PointerEvent) {
     hasPointer = true
     lastPointerAt = performance.now()
-    const rect = el.getBoundingClientRect()
-    const headX = rect.left + rect.width * 0.5
-    const headY = rect.top + rect.height * 0.22
-    targetY = clamp((event.clientX - headX) / (rect.width * 0.55), -1, 1)
-    targetX = clamp((event.clientY - headY) / (rect.height * 0.7), -0.55, 0.55)
+    targetY = clamp((event.clientX - headX) * scaleX, -1, 1)
+    targetX = clamp((event.clientY - headY) * scaleY, -0.55, 0.55)
   }
 
   function onPointerLeave() {
@@ -43,33 +53,44 @@ export function useHeadTracking(anchor: Ref<HTMLElement | null>) {
   }
 
   function tick(now: number) {
-    idlePhase += 0.018
-    const idleY = Math.sin(idlePhase) * 0.08
-    const idleX = Math.cos(idlePhase * 0.7) * 0.04
+    idlePhase += 0.028
+    const idleY = Math.sin(idlePhase) * 0.06
+    const idleX = Math.cos(idlePhase * 0.7) * 0.03
 
-    const pointerFresh = hasPointer && now - lastPointerAt < 1600
+    const pointerFresh = hasPointer && now - lastPointerAt < 900
     const desireY = pointerFresh ? targetY : idleY
-    const desireX = pointerFresh ? targetX * 0.65 : idleX
+    const desireX = pointerFresh ? targetX * 0.7 : idleX
 
-    currentY = lerp(currentY, desireY, 0.08)
-    currentX = lerp(currentX, desireX, 0.08)
+    // ~0.28 ≈ snappy follow; was 0.08 (noticeable lag).
+    currentY = lerp(currentY, desireY, 0.28)
+    currentX = lerp(currentX, desireX, 0.28)
 
-    rotateY.value = currentY * 18
-    rotateX.value = currentX * 10
-    sway.value = Math.sin(idlePhase * 0.9) * 1.4
+    const nextY = currentY * 18
+    const nextX = currentX * 10
+    const nextSway = Math.sin(idlePhase * 0.9) * 1.1
+
+    // Skip trivial Vue writes to cut style thrash.
+    if (Math.abs(nextY - rotateY.value) > 0.08) rotateY.value = nextY
+    if (Math.abs(nextX - rotateX.value) > 0.08) rotateX.value = nextX
+    if (Math.abs(nextSway - sway.value) > 0.05) sway.value = nextSway
 
     frame = requestAnimationFrame(tick)
   }
 
   onMounted(() => {
+    refreshAnchorMetrics()
     window.addEventListener('pointermove', onPointerMove, { passive: true })
     window.addEventListener('pointerleave', onPointerLeave)
+    window.addEventListener('resize', refreshAnchorMetrics, { passive: true })
+    // One layout pass after fonts/paint settle.
+    requestAnimationFrame(refreshAnchorMetrics)
     frame = requestAnimationFrame(tick)
   })
 
   onUnmounted(() => {
     window.removeEventListener('pointermove', onPointerMove)
     window.removeEventListener('pointerleave', onPointerLeave)
+    window.removeEventListener('resize', refreshAnchorMetrics)
     cancelAnimationFrame(frame)
   })
 

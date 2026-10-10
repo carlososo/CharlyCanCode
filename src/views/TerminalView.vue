@@ -7,25 +7,28 @@ const shown = ref('')
 let timer = 0
 let line = 0
 let col = 0
+let frozen = ''
 
 function tick() {
   if (line >= terminalScript.length) return
   const current = terminalScript[line] ?? ''
   if (col <= current.length) {
-    const prefix = terminalScript.slice(0, line).join('\n')
+    const step = current.startsWith('$') ? 1 : 2
+    col = Math.min(current.length, col + step)
     const partial = current.slice(0, col)
-    shown.value = prefix ? `${prefix}\n${partial}` : partial
-    col += 1
-    timer = window.setTimeout(tick, current.startsWith('$') ? 28 : 16)
+    shown.value = frozen ? `${frozen}\n${partial}` : partial
+    // Snappy but still readable (~2× prior speed).
+    timer = window.setTimeout(tick, current.startsWith('$') ? 14 : 7)
   } else {
+    frozen = frozen ? `${frozen}\n${current}` : current
     line += 1
     col = 0
-    timer = window.setTimeout(tick, 220)
+    timer = window.setTimeout(tick, 70)
   }
 }
 
 onMounted(() => {
-  timer = window.setTimeout(tick, 350)
+  timer = window.setTimeout(tick, 120)
 })
 
 onUnmounted(() => {
@@ -40,7 +43,7 @@ onUnmounted(() => {
         <span class="term__dots" aria-hidden="true"><i /><i /><i /></span>
         <span class="term__name">carlos@desk:~</span>
       </div>
-      <pre class="term__out" aria-live="polite">{{ shown }}</pre>
+      <pre class="term__out">{{ shown }}</pre>
     </div>
   </FullscreenShell>
 </template>

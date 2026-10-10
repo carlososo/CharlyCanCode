@@ -95,7 +95,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   z-index: 2;
   text-align: center;
   margin-bottom: clamp(0.35rem, 1.5vh, 1rem);
-  animation: rise 700ms ease-out both;
+  animation: rise 280ms ease-out both;
 }
 
 .desk__name {
@@ -123,7 +123,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: rise 900ms 80ms ease-out both;
+  animation: rise 320ms 40ms ease-out both;
 }
 
 .desk__monitor {
@@ -140,7 +140,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   position: relative;
   z-index: 3;
   margin-top: -3.5rem;
-  animation: bob 4.5s ease-in-out infinite;
+  animation: bob 3.2s ease-in-out infinite;
 }
 
 @keyframes floaty {
@@ -170,7 +170,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
   }
 }
 

@@ -218,8 +218,8 @@ const windows = [
     0 10px 22px rgba(20, 50, 80, 0.18),
     0 0 0 1px rgba(30, 60, 90, 0.12);
   transition:
-    transform 180ms ease,
-    box-shadow 180ms ease;
+    transform 90ms ease,
+    box-shadow 90ms ease;
   z-index: 1;
   color: #23455c;
 }
