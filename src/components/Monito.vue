@@ -17,70 +17,69 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
       <ellipse cx="140" cy="296" rx="20" ry="6" fill="#2a3a48" />
 
       <g :transform="`rotate(${sway} 140 220)`">
-        <!-- Seat only — sin apoyabrazos ni barras laterales -->
-        <ellipse cx="140" cy="228" rx="46" ry="22" fill="#1e6f9f" />
-        <ellipse cx="140" cy="222" rx="38" ry="14" fill="#176088" />
+        <!-- Asiento compacto — sin apoyabrazos -->
+        <ellipse cx="140" cy="232" rx="36" ry="18" fill="#1e6f9f" />
+        <ellipse cx="140" cy="228" rx="28" ry="11" fill="#176088" />
 
         <!-- Respaldo alto gamer -->
         <path
-          d="M104 118 C100 160 102 198 110 220 L170 220 C178 198 180 160 176 118 C158 108 122 108 104 118 Z"
+          d="M108 124 C104 164 106 200 114 222 L166 222 C174 200 176 164 172 124 C156 114 124 114 108 124 Z"
           fill="#2584bc"
         />
         <path
-          d="M112 122 C110 158 112 188 118 210 L162 210 C168 188 170 158 168 122 C154 114 126 114 112 122 Z"
+          d="M116 128 C114 162 116 190 122 212 L158 212 C164 190 166 162 164 128 C150 120 130 120 116 128 Z"
           fill="#1a5f8a"
         />
         <!-- Headrest -->
-        <rect x="108" y="86" width="64" height="30" rx="13" fill="#1e6f9f" />
-        <rect x="116" y="93" width="48" height="16" rx="8" fill="#ff7a59" />
+        <rect x="110" y="92" width="60" height="28" rx="12" fill="#1e6f9f" />
+        <rect x="118" y="98" width="44" height="15" rx="7" fill="#ff7a59" />
 
-        <!-- Cuerpo de espaldas, hombros pegados al torso -->
-        <ellipse cx="140" cy="196" rx="34" ry="40" fill="#3d2918" />
+        <!-- Cuerpo de espaldas -->
+        <ellipse cx="140" cy="200" rx="32" ry="38" fill="#3d2918" />
         <path
-          d="M112 170 C116 204 122 226 140 232 C158 226 164 204 168 170 C152 178 128 178 112 170 Z"
+          d="M114 174 C118 206 124 228 140 234 C156 228 162 206 166 174 C150 182 130 182 114 174 Z"
           fill="#4a3220"
         />
         <path
-          d="M126 166 Q140 178 154 166"
+          d="M128 170 Q140 182 152 170"
           stroke="#6b4a30"
           stroke-width="3"
           fill="none"
           stroke-linecap="round"
         />
 
-        <!-- Cabeza + cabello (tracking); pelo asentado sobre el cráneo -->
+        <!-- Cabeza + cabello: pelo envuelve el cráneo (vista de espalda) -->
         <g
           class="monito__head"
           :style="{
             transform: `translate(${rotateY * 1.15}px, ${rotateX * 0.9}px) rotate(${rotateY * 0.4}deg)`,
           }"
         >
-          <rect x="129" y="134" width="22" height="18" rx="7" fill="#e8b48a" />
-          <ellipse cx="140" cy="116" rx="32" ry="34" fill="#f0c4a0" />
-          <ellipse cx="110" cy="118" rx="6" ry="9" fill="#e8b48a" />
-          <ellipse cx="170" cy="118" rx="6" ry="9" fill="#e8b48a" />
-
-          <!-- Pelo asentado en el cráneo (mitad superior), sin flotar -->
+          <rect x="130" y="138" width="20" height="16" rx="6" fill="#e8b48a" />
+          <ellipse cx="140" cy="120" rx="30" ry="32" fill="#f0c4a0" />
+          <!-- Pelo cubre casi todo el occipucio; piel solo en cuello/orejas -->
           <path
             class="monito__hair"
-            d="M109 128
-               C107 104 120 90 140 88
-               C160 90 173 104 171 128
-               C164 114 152 108 140 108
-               C128 108 116 114 109 128 Z"
+            d="M112 136
+               C108 108 118 90 140 88
+               C162 90 172 108 168 136
+               C160 148 150 152 140 152
+               C130 152 120 148 112 136 Z"
             fill="#2a1a12"
           />
           <path
-            d="M115 124 C119 106 130 98 140 96 C150 98 161 106 165 124
-               C157 114 149 110 140 110 C131 110 123 114 115 124 Z"
+            d="M118 132 C116 108 126 96 140 94 C154 96 164 108 162 132
+               C154 142 147 146 140 146 C133 146 126 142 118 132 Z"
             fill="#3d2918"
           />
+          <ellipse cx="112" cy="124" rx="5" ry="8" fill="#e8b48a" />
+          <ellipse cx="168" cy="124" rx="5" ry="8" fill="#e8b48a" />
           <path
-            d="M134 94 C138 86 144 86 148 94 C144 90 138 90 134 94 Z"
+            d="M134 98 C138 90 144 90 148 98 C144 94 138 94 134 98 Z"
             fill="#1a100c"
           />
           <path
-            d="M147 93 C151 84 158 87 160 96 C156 91 151 91 147 93 Z"
+            d="M147 97 C151 88 158 91 160 100 C156 95 151 95 147 97 Z"
             fill="#1a100c"
             opacity="0.9"
           />
