@@ -60,28 +60,27 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
           <ellipse cx="110" cy="118" rx="6" ry="9" fill="#e8b48a" />
           <ellipse cx="170" cy="118" rx="6" ry="9" fill="#e8b48a" />
 
-          <!-- Masa de pelo cubriendo la mitad superior de la cabeza -->
+          <!-- Pelo asentado en el cráneo (mitad superior), sin flotar -->
           <path
             class="monito__hair"
-            d="M110 122
-               C108 96 120 80 140 78
-               C160 80 172 96 170 122
-               C164 108 152 102 140 102
-               C128 102 116 108 110 122 Z"
+            d="M109 128
+               C107 104 120 90 140 88
+               C160 90 173 104 171 128
+               C164 114 152 108 140 108
+               C128 108 116 114 109 128 Z"
             fill="#2a1a12"
           />
           <path
-            d="M116 118 C120 98 130 90 140 88 C150 90 160 98 164 118
-               C156 108 148 104 140 104 C132 104 124 108 116 118 Z"
+            d="M115 124 C119 106 130 98 140 96 C150 98 161 106 165 124
+               C157 114 149 110 140 110 C131 110 123 114 115 124 Z"
             fill="#3d2918"
           />
-          <!-- Mechón bajo, dentro del contorno del cráneo -->
           <path
-            d="M134 86 C138 76 144 76 148 86 C144 82 138 82 134 86 Z"
+            d="M134 94 C138 86 144 86 148 94 C144 90 138 90 134 94 Z"
             fill="#1a100c"
           />
           <path
-            d="M148 85 C152 74 160 78 162 88 C158 82 152 82 148 85 Z"
+            d="M147 93 C151 84 158 87 160 96 C156 91 151 91 147 93 Z"
             fill="#1a100c"
             opacity="0.9"
           />

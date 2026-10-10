@@ -177,8 +177,9 @@ const windows = [
 }
 
 .monitor__foot {
-  width: min(42vw, 280px);
-  height: 14px;
+  /* Narrow foot so it doesn't read as chair armrests behind the monito */
+  width: min(12vw, 110px);
+  height: 12px;
   margin-top: -2px;
   border-radius: 999px;
   background: linear-gradient(180deg, #3a4654, #1f2935);
