@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+:root {
+  --sky-top: #c7e7fb;
+  --sky-mid: #8ec8ef;
+  --sky-deep: #5aaad8;
+  --cloud: rgba(255, 255, 255, 0.45);
+  --ink: #1f3a4d;
+  --brand: #0b4f75;
+  --accent: #ffb347;
+  --screen: #d9f0ff;
+  --bezel: #2c3e50;
+  --font-display: 'Fredoka', 'Nunito', sans-serif;
+  --font-body: 'Nunito', 'Fredoka', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  background: var(--sky-mid);
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
