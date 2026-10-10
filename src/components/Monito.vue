@@ -17,28 +17,26 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
       <ellipse cx="140" cy="318" rx="16" ry="5" fill="#243442" />
 
       <g :transform="`rotate(${sway} 140 210)`">
-        <!-- Silla gamer: respaldo ALTO visible, sin apoyabrazos -->
-        <ellipse cx="140" cy="255" rx="32" ry="12" fill="#1a6fa3" />
+        <!-- Silla gamer: respaldo ALTO, asiento estrecho, sin apoyabrazos -->
+        <ellipse cx="140" cy="258" rx="24" ry="10" fill="#1a6fa3" />
         <path
-          d="M108 120
-             C102 160 104 210 112 248
-             L168 248
-             C176 210 178 160 172 120
-             C158 108 122 108 108 120 Z"
+          d="M112 118
+             C108 160 110 210 116 250
+             L164 250
+             C170 210 172 160 168 118
+             C156 108 124 108 112 118 Z"
           fill="#2b8fc4"
         />
         <path
-          d="M118 128
-             C114 168 116 210 122 240
-             L158 240
-             C164 210 166 168 162 128
-             C150 118 130 118 118 128 Z"
+          d="M120 126
+             C118 168 120 208 124 242
+             L156 242
+             C160 208 162 168 160 126
+             C150 118 130 118 120 126 Z"
           fill="#1f6f9c"
         />
-        <!-- Headrest gamer -->
         <rect x="112" y="88" width="56" height="32" rx="14" fill="#2b8fc4" />
         <rect x="120" y="96" width="40" height="16" rx="8" fill="#ff7a59" />
-        <!-- Costuras / look gamer -->
         <path
           d="M140 130 L140 235"
           stroke="#165a82"
@@ -48,29 +46,28 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
         />
 
         <!-- Torso -->
-        <ellipse cx="140" cy="210" rx="30" ry="36" fill="#3a2818" />
+        <ellipse cx="140" cy="208" rx="28" ry="34" fill="#3a2818" />
         <path
-          d="M116 185 C120 215 128 238 140 244 C152 238 160 215 164 185 C150 194 130 194 116 185 Z"
+          d="M118 184 C122 214 130 236 140 242 C150 236 158 214 162 184 C148 192 132 192 118 184 Z"
           fill="#4a3422"
         />
 
-        <!-- Manitas (desde atrás, apoyadas delante) -->
-        <ellipse cx="98" cy="248" rx="14" ry="9" fill="#3a2818" />
-        <ellipse cx="182" cy="248" rx="14" ry="9" fill="#3a2818" />
-        <ellipse cx="92" cy="252" rx="10" ry="7" fill="#f0c4a0" />
-        <ellipse cx="188" cy="252" rx="10" ry="7" fill="#f0c4a0" />
-        <!-- Deditos sutiles -->
+        <!-- Manitas delante del asiento (sobre el escritorio), no a los costados -->
+        <ellipse cx="118" cy="262" rx="11" ry="7" fill="#3a2818" />
+        <ellipse cx="162" cy="262" rx="11" ry="7" fill="#3a2818" />
+        <ellipse cx="114" cy="266" rx="9" ry="6" fill="#f0c4a0" />
+        <ellipse cx="166" cy="266" rx="9" ry="6" fill="#f0c4a0" />
         <path
-          d="M86 250 Q88 246 90 250 M90 252 Q92 247 94 252 M94 253 Q96 248 98 253"
+          d="M108 265 Q110 261 112 265 M112 267 Q114 262 116 267 M116 268 Q118 263 120 268"
           stroke="#e0b090"
-          stroke-width="1.5"
+          stroke-width="1.4"
           fill="none"
           stroke-linecap="round"
         />
         <path
-          d="M182 250 Q184 246 186 250 M186 252 Q188 247 190 252 M190 253 Q192 248 194 253"
+          d="M160 265 Q162 261 164 265 M164 267 Q166 262 168 267 M168 268 Q170 263 172 268"
           stroke="#e0b090"
-          stroke-width="1.5"
+          stroke-width="1.4"
           fill="none"
           stroke-linecap="round"
         />
