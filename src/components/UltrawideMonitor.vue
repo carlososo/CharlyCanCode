@@ -3,34 +3,52 @@ import { RouterLink } from 'vue-router'
 
 const windows = [
   {
-    to: '/sobre',
+    to: '/terminal',
     title: 'Sobre mí',
-    x: '6%',
-    y: '10%',
-    w: '34%',
-    h: '48%',
-    tint: '#fff8e8',
-    accent: '#f0a04b',
+    subtitle: 'Terminal',
+    x: '4%',
+    y: '8%',
+    w: '28%',
+    h: '52%',
+    tint: '#1a1e24',
+    accent: '#3dd68c',
+    dark: true,
   },
   {
-    to: '/proyectos',
+    to: '/explorer',
     title: 'Proyectos',
-    x: '38%',
-    y: '18%',
-    w: '36%',
-    h: '54%',
+    subtitle: 'Explorer',
+    x: '30%',
+    y: '14%',
+    w: '30%',
+    h: '56%',
     tint: '#eef8ff',
     accent: '#4aa3d8',
+    dark: false,
   },
   {
-    to: '/contacto',
+    to: '/browser',
     title: 'Contacto',
-    x: '62%',
-    y: '8%',
-    w: '32%',
+    subtitle: 'Navegador',
+    x: '56%',
+    y: '6%',
+    w: '28%',
+    h: '48%',
+    tint: '#f7fbff',
+    accent: '#5b8def',
+    dark: false,
+  },
+  {
+    to: '/tips',
+    title: 'Dev Tips',
+    subtitle: '2026',
+    x: '68%',
+    y: '38%',
+    w: '26%',
     h: '42%',
-    tint: '#f3fff0',
-    accent: '#6cbc6a',
+    tint: '#fff6e8',
+    accent: '#e8a23c',
+    dark: false,
   },
 ] as const
 </script>
@@ -43,7 +61,7 @@ const windows = [
         <div class="monitor__taskbar" aria-hidden="true">
           <span class="monitor__dot" />
           <span class="monitor__dot" />
-          <span class="monitor__clock">escritorio</span>
+          <span class="monitor__clock">escritorio · 4 apps</span>
         </div>
 
         <RouterLink
@@ -51,6 +69,7 @@ const windows = [
           :key="win.to"
           :to="win.to"
           class="desk-window"
+          :class="{ 'desk-window--dark': win.dark }"
           :style="{
             left: win.x,
             top: win.y,
@@ -67,16 +86,19 @@ const windows = [
             <span class="desk-window__title">{{ win.title }}</span>
           </span>
           <span class="desk-window__body">
-            <span class="desk-window__line" />
-            <span class="desk-window__line short" />
+            <span class="desk-window__sub">{{ win.subtitle }}</span>
             <span class="desk-window__cta">Abrir</span>
           </span>
         </RouterLink>
       </div>
       <div class="monitor__chin" aria-hidden="true" />
     </div>
-    <!-- Stand omitted from the desk scene: a wide foot/neck behind the
-         monito read as chair armrests. Ultrawide read comes from the bezel. -->
+
+    <!-- Base del monitor: estrecha y centrada, sobre el escritorio -->
+    <div class="monitor__stand" aria-hidden="true">
+      <div class="monitor__neck" />
+      <div class="monitor__foot" />
+    </div>
   </div>
 </template>
 
@@ -86,6 +108,8 @@ const windows = [
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .monitor__bezel {
@@ -93,9 +117,9 @@ const windows = [
   height: 40vh;
   background: linear-gradient(180deg, #3a4654 0%, #243041 100%);
   border-radius: 18px;
-  padding: 14px 16px 18px;
+  padding: 12px 14px 14px;
   box-shadow:
-    0 30px 50px rgba(25, 60, 90, 0.28),
+    0 24px 40px rgba(25, 60, 90, 0.26),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
@@ -113,8 +137,8 @@ const windows = [
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.55), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(255, 220, 150, 0.35), transparent 35%),
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.55), transparent 40%),
+    radial-gradient(circle at 78% 28%, rgba(255, 220, 150, 0.3), transparent 35%),
     linear-gradient(160deg, #b7ddf5 0%, #8ec8ef 45%, #7ab8e4 100%);
 }
 
@@ -122,7 +146,7 @@ const windows = [
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.18;
+  opacity: 0.16;
   background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.7) 1px, transparent 0);
   background-size: 18px 18px;
 }
@@ -132,20 +156,20 @@ const windows = [
   left: 0;
   right: 0;
   bottom: 0;
-  height: 28px;
+  height: 26px;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 0 12px;
   background: rgba(20, 50, 75, 0.55);
   color: #f4fbff;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   z-index: 2;
 }
 
 .monitor__dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #9fd4f5;
 }
@@ -153,11 +177,34 @@ const windows = [
 .monitor__clock {
   margin-left: auto;
   opacity: 0.9;
-  letter-spacing: 0.02em;
 }
 
 .monitor__chin {
-  height: 6px;
+  height: 4px;
+}
+
+.monitor__stand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -1px;
+  z-index: 2;
+}
+
+.monitor__neck {
+  width: 42px;
+  height: 22px;
+  background: linear-gradient(90deg, #2a3544, #4a5a6c, #2a3544);
+  clip-path: polygon(22% 0, 78% 0, 100% 100%, 0 100%);
+}
+
+.monitor__foot {
+  width: 120px;
+  height: 10px;
+  margin-top: -1px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #3a4654, #1f2935);
+  box-shadow: 0 6px 10px rgba(20, 40, 60, 0.22);
 }
 
 .desk-window {
@@ -168,20 +215,24 @@ const windows = [
   overflow: hidden;
   background: var(--win-tint);
   box-shadow:
-    0 10px 24px rgba(20, 50, 80, 0.18),
+    0 10px 22px rgba(20, 50, 80, 0.18),
     0 0 0 1px rgba(30, 60, 90, 0.12);
-  transform: translateZ(0);
   transition:
     transform 180ms ease,
     box-shadow 180ms ease;
   z-index: 1;
+  color: #23455c;
+}
+
+.desk-window--dark {
+  color: #d7e0ea;
 }
 
 .desk-window:hover,
 .desk-window:focus-visible {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-3px) scale(1.02);
   box-shadow:
-    0 16px 30px rgba(20, 50, 80, 0.24),
+    0 14px 28px rgba(20, 50, 80, 0.24),
     0 0 0 2px var(--win-accent);
   outline: none;
   z-index: 3;
@@ -191,9 +242,14 @@ const windows = [
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 10px;
+  padding: 6px 10px;
   background: color-mix(in srgb, var(--win-accent) 22%, white);
   border-bottom: 1px solid rgba(30, 60, 90, 0.08);
+}
+
+.desk-window--dark .desk-window__bar {
+  background: color-mix(in srgb, var(--win-accent) 18%, #12161c);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
 .desk-window__traffic {
@@ -202,8 +258,8 @@ const windows = [
 }
 
 .desk-window__traffic i {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #f2b8b0;
   display: block;
@@ -219,9 +275,8 @@ const windows = [
 
 .desk-window__title {
   font-family: var(--font-display);
-  font-size: clamp(0.8rem, 1.4vw, 1.05rem);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
   font-weight: 600;
-  color: #23455c;
 }
 
 .desk-window__body {
@@ -230,49 +285,42 @@ const windows = [
   flex-direction: column;
   justify-content: center;
   gap: 8px;
-  padding: 12px 14px 14px;
+  padding: 10px 12px 12px;
 }
 
-.desk-window__line {
-  display: block;
-  height: 8px;
-  width: 78%;
-  border-radius: 999px;
-  background: rgba(40, 80, 110, 0.12);
-}
-
-.desk-window__line.short {
-  width: 52%;
+.desk-window__sub {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  font-weight: 600;
 }
 
 .desk-window__cta {
   align-self: flex-start;
-  margin-top: 4px;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: #1f4e6d;
-  background: color-mix(in srgb, var(--win-accent) 28%, white);
-  padding: 4px 10px;
+  color: inherit;
+  background: color-mix(in srgb, var(--win-accent) 30%, white);
+  padding: 3px 9px;
   border-radius: 999px;
 }
 
-@media (max-width: 700px) {
-  .monitor {
-    width: 85vw;
-  }
+.desk-window--dark .desk-window__cta {
+  background: color-mix(in srgb, var(--win-accent) 35%, #0d1117);
+  color: #e8fff4;
+}
 
+@media (max-width: 700px) {
   .monitor__bezel {
-    height: 40vh;
-    padding: 10px 10px 12px;
+    padding: 8px 8px 10px;
     border-radius: 14px;
   }
 
-  .desk-window__line {
-    display: none;
+  .monitor__foot {
+    width: 72px;
   }
 
-  .desk-window__cta {
-    font-size: 0.7rem;
+  .desk-window__sub {
+    display: none;
   }
 }
 </style>

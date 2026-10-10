@@ -1,14 +1,13 @@
 # Carlos — página personal interactiva
 
-SPA en Vue 3 con una escena de escritorio: un monitor ultrawide de frente, ventanas clicables y un “monito” de espaldas en silla gamer cuya cabeza/cabello sigue el cursor.
+SPA en Vue 3: escena de escritorio con monitor ultrawide, silla gamer, monito de espaldas y ventanas que abren apps a **pantalla completa**.
 
 ## Stack
 
-- Vue 3 + Vite + TypeScript
-- Vue Router
+- Vue 3 + Vite + TypeScript + Vue Router
 - Tailwind CSS v4 (`@tailwindcss/vite`)
 
-## Arranque local
+## Arranque
 
 Requisitos: Node `^22.18.0` o `>=24.12.0`.
 
@@ -17,19 +16,15 @@ npm install
 npm run dev
 ```
 
-La app queda en [http://127.0.0.1:43123](http://127.0.0.1:43123).
+App en [http://127.0.0.1:43123](http://127.0.0.1:43123).
 
-Otros scripts:
+## Escena
 
-```bash
-npm run build
-npm run preview
-npm run type-check
-```
+- Fondo azul infantil + escritorio cálido complementario + mouse
+- Monitor ~85vw × ~40vh con base/stand
+- Monito en silla gamer (respaldo alto, manitas, pelo a media cabeza + nuca)
+- Ventanas → fullscreen: Terminal (Sobre mí), Explorer (Proyectos), Navegador (Contacto), Dev Tips
 
-## Escena (v1)
+## Config editable
 
-- Fondo atmosférico azul suave
-- Monitor ~85vw × ~40vh con ventanas a **Sobre mí**, **Proyectos** y **Contacto**
-- Personaje SVG de espaldas; idle mirando el monitor; el puntero actúa como distracción
-- En móvil: composición legible + balanceo idle si no hay ratón
+`src/config/site.ts` — `LINKEDIN_URL`, proyectos stub, tips y script del terminal.

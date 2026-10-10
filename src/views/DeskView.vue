@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DeskSurface from '@/components/DeskSurface.vue'
 import Monito from '@/components/Monito.vue'
 import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 </script>
@@ -14,15 +15,15 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 
     <header class="desk__brand">
       <h1 class="desk__name">Carlos</h1>
-      <p class="desk__line">Mi escritorio vivo: asómate a las ventanas.</p>
+      <p class="desk__line">Mi escritorio vivo: abre una ventana a pantalla completa.</p>
     </header>
 
     <section class="desk__stage" aria-label="Escena del escritorio">
       <UltrawideMonitor class="desk__monitor" />
+      <DeskSurface class="desk__board" />
       <div class="desk__character">
         <Monito />
       </div>
-      <div class="desk__surface" aria-hidden="true" />
     </section>
   </main>
 </template>
@@ -33,7 +34,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
-  padding: clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 3vw, 2rem) 2rem;
+  padding: clamp(0.75rem, 2.5vw, 2rem) clamp(0.75rem, 3vw, 2rem) 1.25rem;
   background:
     radial-gradient(ellipse 80% 50% at 50% -10%, #eaf7ff 0%, transparent 55%),
     linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 48%, #6eb4df 100%);
@@ -83,7 +84,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 .dots {
   position: absolute;
   inset: 0;
-  opacity: 0.22;
+  opacity: 0.2;
   background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.85) 1px, transparent 0);
   background-size: 28px 28px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 85%);
@@ -93,7 +94,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   position: relative;
   z-index: 2;
   text-align: center;
-  margin-bottom: clamp(0.5rem, 2vh, 1.25rem);
+  margin-bottom: clamp(0.35rem, 1.5vh, 1rem);
   animation: rise 700ms ease-out both;
 }
 
@@ -101,7 +102,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   margin: 0;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(3.4rem, 9vw, 6.5rem);
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
   line-height: 0.95;
   letter-spacing: -0.03em;
   color: var(--brand);
@@ -109,9 +110,9 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 }
 
 .desk__line {
-  margin: 0.55rem auto 0;
-  max-width: 28rem;
-  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  margin: 0.45rem auto 0;
+  max-width: 32rem;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
   font-weight: 600;
   color: #2d5570;
 }
@@ -122,31 +123,24 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: min(78vh, 720px);
   animation: rise 900ms 80ms ease-out both;
 }
 
 .desk__monitor {
   position: relative;
+  z-index: 2;
+}
+
+.desk__board {
+  margin-top: -6px;
   z-index: 1;
 }
 
 .desk__character {
-  /* Below the bezel so the dark chin never reads as chair armrests;
-     slight negative margin keeps the head in front of the screen. */
   position: relative;
   z-index: 3;
-  margin-top: -3.25rem;
+  margin-top: -3.5rem;
   animation: bob 4.5s ease-in-out infinite;
-}
-
-.desk__surface {
-  width: min(40vw, 280px);
-  height: 22px;
-  margin-top: -0.5rem;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(40, 90, 120, 0.16), transparent 70%);
-  z-index: 0;
 }
 
 @keyframes floaty {
@@ -176,22 +170,13 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
   }
 }
 
 @media (max-width: 700px) {
-  .desk {
-    padding-top: 1rem;
-  }
-
-  .desk__stage {
-    min-height: auto;
-    padding-bottom: 1.5rem;
-  }
-
   .desk__character {
-    margin-top: -2.25rem;
+    margin-top: -2.5rem;
   }
 }
 </style>
