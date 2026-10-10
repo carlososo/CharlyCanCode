@@ -11,82 +11,56 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
     <svg viewBox="0 0 280 320" role="img" class="monito__svg">
       <title>Monito de espaldas en silla gamer</title>
 
-      <!-- Sombra + pedestal central (sin barras laterales) -->
-      <ellipse cx="140" cy="298" rx="40" ry="8" fill="#1a2a36" opacity="0.22" />
-      <rect x="133" y="250" width="14" height="48" rx="5" fill="#3a4d5c" />
-      <ellipse cx="140" cy="298" rx="18" ry="5" fill="#2a3a48" />
+      <ellipse cx="140" cy="304" rx="28" ry="6" fill="#1a2a36" opacity="0.2" />
+      <rect x="135" y="252" width="10" height="52" rx="4" fill="#3a4d5c" />
+      <ellipse cx="140" cy="304" rx="13" ry="4" fill="#2a3a48" />
 
       <g :transform="`rotate(${sway} 140 220)`">
         <!--
-          Silla gamer: SOLO asiento + respaldo + headrest + pedestal.
-          Prohibido: apoyabrazos, handles, barras horizontales laterales.
+          Orden de pintura: silla primero, torso encima.
+          Respaldo más ESTRECHO que el torso → no asoman lóbulos azules
+          a los lados. Asiento solo DEBAJO del torso, óvalo simple.
         -->
-        <ellipse cx="140" cy="236" rx="34" ry="16" fill="#1e6f9f" />
-        <ellipse cx="140" cy="232" rx="26" ry="10" fill="#176088" />
+        <!-- Respaldo estrecho (visible sobre los hombros, tapado al centro) -->
+        <rect x="128" y="118" width="24" height="90" rx="12" fill="#2584bc" />
+        <rect x="132" y="124" width="16" height="78" rx="8" fill="#1a5f8a" />
 
-        <path
-          d="M110 128 C106 168 108 204 116 226 L164 226 C172 204 174 168 170 128 C154 118 126 118 110 128 Z"
-          fill="#2584bc"
-        />
-        <path
-          d="M118 132 C116 166 118 196 124 218 L156 218 C162 196 164 166 162 132 C148 124 132 124 118 132 Z"
-          fill="#1a5f8a"
-        />
-        <rect x="112" y="96" width="56" height="26" rx="11" fill="#1e6f9f" />
-        <rect x="120" y="102" width="40" height="14" rx="7" fill="#ff7a59" />
+        <!-- Headrest = mismo ancho que el respaldo -->
+        <rect x="124" y="96" width="32" height="24" rx="10" fill="#1e6f9f" />
+        <rect x="128" y="101" width="24" height="12" rx="6" fill="#ff7a59" />
 
-        <!-- Torso -->
-        <ellipse cx="140" cy="204" rx="30" ry="36" fill="#3d2918" />
+        <!-- Asiento: óvalo simple DEBAJO del torso, sin orejas laterales -->
+        <ellipse cx="140" cy="242" rx="22" ry="11" fill="#1e6f9f" />
+        <ellipse cx="140" cy="240" rx="16" ry="7" fill="#176088" />
+
+        <!-- Torso más ancho que el respaldo (cubre cualquier azul lateral) -->
+        <ellipse cx="140" cy="198" rx="26" ry="34" fill="#3d2918" />
         <path
-          d="M116 178 C120 208 126 228 140 234 C154 228 160 208 164 178 C148 186 132 186 116 178 Z"
+          d="M118 172 C122 200 128 220 140 228 C152 220 158 200 162 172 C148 180 132 180 118 172 Z"
           fill="#4a3220"
         />
         <path
-          d="M128 174 Q140 184 152 174"
+          d="M128 168 Q140 176 152 168"
           stroke="#6b4a30"
-          stroke-width="3"
+          stroke-width="2.5"
           fill="none"
           stroke-linecap="round"
         />
 
-        <!--
-          Cabeza de espaldas: pelo = occipucio continuo hasta el hoodie.
-          Sin anillo de piel entre pelo y cuello/hombros.
-        -->
         <g
           class="monito__head"
           :style="{
-            transform: `translate(${rotateY * 1.15}px, ${rotateX * 0.9}px) rotate(${rotateY * 0.4}deg)`,
+            transform: `translate(${rotateY * 1.1}px, ${rotateX * 0.85}px) rotate(${rotateY * 0.35}deg)`,
           }"
         >
-          <!-- Cuello primero (queda bajo el pelo; sin anillo visible) -->
-          <rect x="132" y="160" width="16" height="22" rx="5" fill="#e8b48a" />
-          <!-- Occipucio continuo en pelo hasta empalmar con el hoodie -->
-          <ellipse cx="140" cy="130" rx="36" ry="44" fill="#2a1a12" />
+          <rect x="133" y="150" width="14" height="16" rx="4" fill="#e8b48a" />
+          <ellipse class="monito__hair" cx="140" cy="128" rx="32" ry="40" fill="#2a1a12" />
+          <ellipse cx="140" cy="130" rx="24" ry="30" fill="#3d2918" />
+          <ellipse cx="110" cy="128" rx="5" ry="8" fill="#e8b48a" />
+          <ellipse cx="170" cy="128" rx="5" ry="8" fill="#e8b48a" />
           <path
-            class="monito__hair"
-            d="M106 150
-               C100 114 116 88 140 86
-               C164 88 180 114 174 150
-               C168 172 156 184 140 186
-               C124 184 112 172 106 150 Z"
-            fill="#2a1a12"
-          />
-          <path
-            d="M114 148 C110 118 124 98 140 96 C156 98 170 118 166 148
-               C160 166 152 176 140 178 C128 176 120 166 114 148 Z"
-            fill="#3d2918"
-          />
-          <ellipse cx="106" cy="134" rx="6" ry="9" fill="#e8b48a" />
-          <ellipse cx="174" cy="134" rx="6" ry="9" fill="#e8b48a" />
-          <path
-            d="M132 98 C136 88 144 88 148 98 C144 93 136 93 132 98 Z"
+            d="M133 94 C137 85 145 85 149 94 C145 89 137 89 133 94 Z"
             fill="#1a100c"
-          />
-          <path
-            d="M148 96 C153 86 162 90 164 100 C160 94 153 93 148 96 Z"
-            fill="#1a100c"
-            opacity="0.92"
           />
         </g>
       </g>
@@ -99,7 +73,7 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
   width: min(34vw, 280px);
   max-width: 300px;
   pointer-events: none;
-  filter: drop-shadow(0 18px 18px rgba(20, 50, 70, 0.18));
+  filter: drop-shadow(0 14px 14px rgba(20, 50, 70, 0.16));
 }
 
 .monito__svg {
