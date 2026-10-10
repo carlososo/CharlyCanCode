@@ -17,49 +17,34 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
 
       <g :transform="`rotate(${sway} 140 220)`">
         <!--
-          Orden de pintura: silla primero, torso encima.
-          Respaldo más ESTRECHO que el torso → no asoman lóbulos azules
-          a los lados. Asiento solo DEBAJO del torso, óvalo simple.
+          Silla (detrás del cuerpo): headrest + respaldo cápsula + asiento óvalo.
+          Anchos: headrest ≈ respaldo; asiento ≤ torso → sin lóbulos laterales.
         -->
-        <!-- Respaldo estrecho (visible sobre los hombros, tapado al centro) -->
-        <rect x="128" y="118" width="24" height="90" rx="12" fill="#2584bc" />
-        <rect x="132" y="124" width="16" height="78" rx="8" fill="#1a5f8a" />
+        <rect x="122" y="108" width="36" height="100" rx="18" fill="#2584bc" />
+        <rect x="128" y="116" width="24" height="84" rx="12" fill="#1a5f8a" />
+        <rect x="118" y="90" width="44" height="26" rx="11" fill="#1e6f9f" />
+        <rect x="124" y="96" width="32" height="12" rx="6" fill="#ff7a59" />
 
-        <!-- Headrest = mismo ancho que el respaldo -->
-        <rect x="124" y="96" width="32" height="24" rx="10" fill="#1e6f9f" />
-        <rect x="128" y="101" width="24" height="12" rx="6" fill="#ff7a59" />
+        <!-- Asiento bajo el torso, mismo ancho aproximado (sin orejas) -->
+        <ellipse cx="140" cy="244" rx="20" ry="10" fill="#1e6f9f" />
 
-        <!-- Asiento: óvalo simple DEBAJO del torso, sin orejas laterales -->
-        <ellipse cx="140" cy="242" rx="22" ry="11" fill="#1e6f9f" />
-        <ellipse cx="140" cy="240" rx="16" ry="7" fill="#176088" />
+        <!-- Torso suave, sin picos de hombro -->
+        <ellipse cx="140" cy="200" rx="24" ry="32" fill="#3d2918" />
+        <ellipse cx="140" cy="208" rx="18" ry="22" fill="#4a3220" />
 
-        <!-- Torso más ancho que el respaldo (cubre cualquier azul lateral) -->
-        <ellipse cx="140" cy="198" rx="26" ry="34" fill="#3d2918" />
-        <path
-          d="M118 172 C122 200 128 220 140 228 C152 220 158 200 162 172 C148 180 132 180 118 172 Z"
-          fill="#4a3220"
-        />
-        <path
-          d="M128 168 Q140 176 152 168"
-          stroke="#6b4a30"
-          stroke-width="2.5"
-          fill="none"
-          stroke-linecap="round"
-        />
-
+        <!-- Una sola masa de pelo (un fill); orejas a media altura -->
         <g
           class="monito__head"
           :style="{
             transform: `translate(${rotateY * 1.1}px, ${rotateX * 0.85}px) rotate(${rotateY * 0.35}deg)`,
           }"
         >
-          <rect x="133" y="150" width="14" height="16" rx="4" fill="#e8b48a" />
-          <ellipse class="monito__hair" cx="140" cy="128" rx="32" ry="40" fill="#2a1a12" />
-          <ellipse cx="140" cy="130" rx="24" ry="30" fill="#3d2918" />
-          <ellipse cx="110" cy="128" rx="5" ry="8" fill="#e8b48a" />
-          <ellipse cx="170" cy="128" rx="5" ry="8" fill="#e8b48a" />
+          <rect x="133" y="152" width="14" height="14" rx="4" fill="#e8b48a" />
+          <ellipse class="monito__hair" cx="140" cy="126" rx="33" ry="42" fill="#2a1a12" />
+          <ellipse cx="109" cy="128" rx="5" ry="8" fill="#e8b48a" />
+          <ellipse cx="171" cy="128" rx="5" ry="8" fill="#e8b48a" />
           <path
-            d="M133 94 C137 85 145 85 149 94 C145 89 137 89 133 94 Z"
+            d="M132 92 C137 84 145 84 150 92 C145 88 137 88 132 92 Z"
             fill="#1a100c"
           />
         </g>
