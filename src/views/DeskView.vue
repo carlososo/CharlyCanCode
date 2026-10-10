@@ -119,8 +119,9 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 .desk__stage {
   position: relative;
   z-index: 1;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: min(78vh, 720px);
   animation: rise 900ms 80ms ease-out both;
 }
@@ -131,23 +132,20 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 }
 
 .desk__character {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(1.5rem, 6vh, 3.5rem);
-  transform: translateX(-50%);
+  /* Below the bezel so the dark chin never reads as chair armrests;
+     slight negative margin keeps the head in front of the screen. */
+  position: relative;
   z-index: 3;
+  margin-top: -3.25rem;
   animation: bob 4.5s ease-in-out infinite;
 }
 
 .desk__surface {
-  position: absolute;
-  left: 50%;
-  bottom: 0.4rem;
-  width: min(70vw, 640px);
-  height: 28px;
-  transform: translateX(-50%);
+  width: min(40vw, 280px);
+  height: 22px;
+  margin-top: -0.5rem;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(40, 90, 120, 0.18), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(40, 90, 120, 0.16), transparent 70%);
   z-index: 0;
 }
 
@@ -175,10 +173,10 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 @keyframes bob {
   0%,
   100% {
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
   50% {
-    transform: translateX(-50%) translateY(-6px);
+    transform: translateY(-6px);
   }
 }
 
@@ -189,11 +187,11 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 
   .desk__stage {
     min-height: auto;
-    padding-bottom: 7rem;
+    padding-bottom: 1.5rem;
   }
 
   .desk__character {
-    bottom: 0.25rem;
+    margin-top: -2.25rem;
   }
 }
 </style>

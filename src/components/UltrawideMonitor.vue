@@ -75,10 +75,8 @@ const windows = [
       </div>
       <div class="monitor__chin" aria-hidden="true" />
     </div>
-    <div class="monitor__stand" aria-hidden="true">
-      <div class="monitor__neck" />
-      <div class="monitor__foot" />
-    </div>
+    <!-- Stand omitted from the desk scene: a wide foot/neck behind the
+         monito read as chair armrests. Ultrawide read comes from the bezel. -->
   </div>
 </template>
 
@@ -160,30 +158,6 @@ const windows = [
 
 .monitor__chin {
   height: 6px;
-}
-
-.monitor__stand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -2px;
-}
-
-.monitor__neck {
-  width: 70px;
-  height: 34px;
-  background: linear-gradient(90deg, #2a3544, #445466, #2a3544);
-  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
-}
-
-.monitor__foot {
-  /* Narrow foot so it doesn't read as chair armrests behind the monito */
-  width: min(12vw, 110px);
-  height: 12px;
-  margin-top: -2px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #3a4654, #1f2935);
-  box-shadow: 0 10px 18px rgba(20, 40, 60, 0.25);
 }
 
 .desk-window {

@@ -11,77 +11,82 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
     <svg viewBox="0 0 280 320" role="img" class="monito__svg">
       <title>Monito de espaldas en silla gamer</title>
 
-      <!-- Base / pedestal -->
-      <ellipse cx="140" cy="296" rx="48" ry="9" fill="#1a2a36" opacity="0.25" />
-      <rect x="132" y="248" width="16" height="46" rx="6" fill="#3a4d5c" />
-      <ellipse cx="140" cy="296" rx="20" ry="6" fill="#2a3a48" />
+      <!-- Sombra + pedestal central (sin barras laterales) -->
+      <ellipse cx="140" cy="298" rx="40" ry="8" fill="#1a2a36" opacity="0.22" />
+      <rect x="133" y="250" width="14" height="48" rx="5" fill="#3a4d5c" />
+      <ellipse cx="140" cy="298" rx="18" ry="5" fill="#2a3a48" />
 
       <g :transform="`rotate(${sway} 140 220)`">
-        <!-- Asiento compacto — sin apoyabrazos -->
-        <ellipse cx="140" cy="232" rx="36" ry="18" fill="#1e6f9f" />
-        <ellipse cx="140" cy="228" rx="28" ry="11" fill="#176088" />
+        <!--
+          Silla gamer: SOLO asiento + respaldo + headrest + pedestal.
+          Prohibido: apoyabrazos, handles, barras horizontales laterales.
+        -->
+        <ellipse cx="140" cy="236" rx="34" ry="16" fill="#1e6f9f" />
+        <ellipse cx="140" cy="232" rx="26" ry="10" fill="#176088" />
 
-        <!-- Respaldo alto gamer -->
         <path
-          d="M108 124 C104 164 106 200 114 222 L166 222 C174 200 176 164 172 124 C156 114 124 114 108 124 Z"
+          d="M110 128 C106 168 108 204 116 226 L164 226 C172 204 174 168 170 128 C154 118 126 118 110 128 Z"
           fill="#2584bc"
         />
         <path
-          d="M116 128 C114 162 116 190 122 212 L158 212 C164 190 166 162 164 128 C150 120 130 120 116 128 Z"
+          d="M118 132 C116 166 118 196 124 218 L156 218 C162 196 164 166 162 132 C148 124 132 124 118 132 Z"
           fill="#1a5f8a"
         />
-        <!-- Headrest -->
-        <rect x="110" y="92" width="60" height="28" rx="12" fill="#1e6f9f" />
-        <rect x="118" y="98" width="44" height="15" rx="7" fill="#ff7a59" />
+        <rect x="112" y="96" width="56" height="26" rx="11" fill="#1e6f9f" />
+        <rect x="120" y="102" width="40" height="14" rx="7" fill="#ff7a59" />
 
-        <!-- Cuerpo de espaldas -->
-        <ellipse cx="140" cy="200" rx="32" ry="38" fill="#3d2918" />
+        <!-- Torso -->
+        <ellipse cx="140" cy="204" rx="30" ry="36" fill="#3d2918" />
         <path
-          d="M114 174 C118 206 124 228 140 234 C156 228 162 206 166 174 C150 182 130 182 114 174 Z"
+          d="M116 178 C120 208 126 228 140 234 C154 228 160 208 164 178 C148 186 132 186 116 178 Z"
           fill="#4a3220"
         />
         <path
-          d="M128 170 Q140 182 152 170"
+          d="M128 174 Q140 184 152 174"
           stroke="#6b4a30"
           stroke-width="3"
           fill="none"
           stroke-linecap="round"
         />
 
-        <!-- Cabeza + cabello: pelo envuelve el cráneo (vista de espalda) -->
+        <!--
+          Cabeza de espaldas: pelo = occipucio continuo hasta el hoodie.
+          Sin anillo de piel entre pelo y cuello/hombros.
+        -->
         <g
           class="monito__head"
           :style="{
             transform: `translate(${rotateY * 1.15}px, ${rotateX * 0.9}px) rotate(${rotateY * 0.4}deg)`,
           }"
         >
-          <rect x="130" y="138" width="20" height="16" rx="6" fill="#e8b48a" />
-          <ellipse cx="140" cy="120" rx="30" ry="32" fill="#f0c4a0" />
-          <!-- Pelo cubre casi todo el occipucio; piel solo en cuello/orejas -->
+          <!-- Cuello primero (queda bajo el pelo; sin anillo visible) -->
+          <rect x="132" y="160" width="16" height="22" rx="5" fill="#e8b48a" />
+          <!-- Occipucio continuo en pelo hasta empalmar con el hoodie -->
+          <ellipse cx="140" cy="130" rx="36" ry="44" fill="#2a1a12" />
           <path
             class="monito__hair"
-            d="M112 136
-               C108 108 118 90 140 88
-               C162 90 172 108 168 136
-               C160 148 150 152 140 152
-               C130 152 120 148 112 136 Z"
+            d="M106 150
+               C100 114 116 88 140 86
+               C164 88 180 114 174 150
+               C168 172 156 184 140 186
+               C124 184 112 172 106 150 Z"
             fill="#2a1a12"
           />
           <path
-            d="M118 132 C116 108 126 96 140 94 C154 96 164 108 162 132
-               C154 142 147 146 140 146 C133 146 126 142 118 132 Z"
+            d="M114 148 C110 118 124 98 140 96 C156 98 170 118 166 148
+               C160 166 152 176 140 178 C128 176 120 166 114 148 Z"
             fill="#3d2918"
           />
-          <ellipse cx="112" cy="124" rx="5" ry="8" fill="#e8b48a" />
-          <ellipse cx="168" cy="124" rx="5" ry="8" fill="#e8b48a" />
+          <ellipse cx="106" cy="134" rx="6" ry="9" fill="#e8b48a" />
+          <ellipse cx="174" cy="134" rx="6" ry="9" fill="#e8b48a" />
           <path
-            d="M134 98 C138 90 144 90 148 98 C144 94 138 94 134 98 Z"
+            d="M132 98 C136 88 144 88 148 98 C144 93 136 93 132 98 Z"
             fill="#1a100c"
           />
           <path
-            d="M147 97 C151 88 158 91 160 100 C156 95 151 95 147 97 Z"
+            d="M148 96 C153 86 162 90 164 100 C160 94 153 93 148 96 Z"
             fill="#1a100c"
-            opacity="0.9"
+            opacity="0.92"
           />
         </g>
       </g>
