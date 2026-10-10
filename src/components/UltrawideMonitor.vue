@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+
+const screen = ref<HTMLElement | null>(null)
+defineExpose({ screen })
 
 const windows = [
   {
@@ -10,9 +14,11 @@ const windows = [
     y: '8%',
     w: '28%',
     h: '52%',
+    vt: 'win-terminal',
     tint: '#1a1e24',
     accent: '#3dd68c',
     dark: true,
+    chat: false,
   },
   {
     to: '/explorer',
@@ -22,33 +28,39 @@ const windows = [
     y: '14%',
     w: '30%',
     h: '56%',
+    vt: 'win-explorer',
     tint: '#eef8ff',
     accent: '#4aa3d8',
     dark: false,
+    chat: false,
   },
   {
     to: '/browser',
     title: 'Contacto',
-    subtitle: 'Navegador',
-    x: '56%',
-    y: '6%',
-    w: '28%',
-    h: '48%',
-    tint: '#f7fbff',
-    accent: '#5b8def',
+    subtitle: 'Mensajes',
+    x: 'calc(56% )',
+    y: '10%',
+    w: '18%',
+    h: '34%',
+    vt: 'win-browser',
+    tint: '#f4f7fb',
+    accent: '#3d8bfd',
     dark: false,
+    chat: true,
   },
   {
     to: '/tips',
     title: 'Dev Tips',
     subtitle: '2026',
-    x: '68%',
+    x: 'calc(68%)',
     y: '38%',
     w: '26%',
     h: '42%',
+    vt: 'win-tips',
     tint: '#fff6e8',
     accent: '#e8a23c',
     dark: false,
+    chat: false,
   },
 ] as const
 </script>
@@ -56,7 +68,7 @@ const windows = [
 <template>
   <div class="monitor" role="region" aria-label="Monitor ultrawide con ventanas">
     <div class="monitor__bezel">
-      <div class="monitor__screen">
+      <div ref="screen" class="monitor__screen">
         <div class="monitor__wallpaper" />
         <div class="monitor__taskbar" aria-hidden="true">
           <span class="monitor__dot" />
@@ -69,7 +81,7 @@ const windows = [
           :key="win.to"
           :to="win.to"
           class="desk-window"
-          :class="{ 'desk-window--dark': win.dark }"
+          :class="{ 'desk-window--dark': win.dark, 'desk-window--chat': win.chat }"
           :style="{
             left: win.x,
             top: win.y,
@@ -77,18 +89,35 @@ const windows = [
             height: win.h,
             '--win-tint': win.tint,
             '--win-accent': win.accent,
+            'view-transition-name': win.vt,
           }"
         >
-          <span class="desk-window__bar">
-            <span class="desk-window__traffic" aria-hidden="true">
-              <i /><i /><i />
+          <template v-if="win.chat">
+            <span class="chat__head">
+              <span class="chat__avatar" aria-hidden="true" />
+              <span class="chat__who">
+                <span class="desk-window__title">Charly</span>
+                <span class="chat__status">en línea</span>
+              </span>
             </span>
-            <span class="desk-window__title">{{ win.title }}</span>
-          </span>
-          <span class="desk-window__body">
-            <span class="desk-window__sub">{{ win.subtitle }}</span>
-            <span class="desk-window__cta">Abrir</span>
-          </span>
+            <span class="chat__thread">
+              <span class="chat__bubble">¿Hablamos?</span>
+              <span class="chat__bubble chat__bubble--me">Cuando quieras</span>
+            </span>
+            <span class="chat__input">Mensaje</span>
+          </template>
+          <template v-else>
+            <span class="desk-window__bar">
+              <span class="desk-window__traffic" aria-hidden="true">
+                <i /><i /><i />
+              </span>
+              <span class="desk-window__title">{{ win.title }}</span>
+            </span>
+            <span class="desk-window__body">
+              <span class="desk-window__sub">{{ win.subtitle }}</span>
+              <span class="desk-window__cta">Abrir</span>
+            </span>
+          </template>
         </RouterLink>
       </div>
       <div class="monitor__chin" aria-hidden="true" />
@@ -104,7 +133,7 @@ const windows = [
 
 <style scoped>
 .monitor {
-  width: 85vw;
+  width: 55.84vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -114,7 +143,7 @@ const windows = [
 
 .monitor__bezel {
   width: 100%;
-  height: 40vh;
+  height: 30vh;
   background: linear-gradient(180deg, #3a4654 0%, #243041 100%);
   border-radius: 18px;
   padding: 12px 14px 14px;
@@ -307,6 +336,85 @@ const windows = [
 .desk-window--dark .desk-window__cta {
   background: color-mix(in srgb, var(--win-accent) 35%, #0d1117);
   color: #e8fff4;
+}
+
+.desk-window--chat {
+  border-radius: 16px;
+  z-index: 2;
+}
+
+.chat__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: #fff;
+  border-bottom: 1px solid rgba(30, 60, 90, 0.08);
+}
+
+.chat__avatar {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #9ec5ff, var(--win-accent));
+}
+
+.chat__who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.05;
+}
+
+.desk-window--chat .desk-window__title {
+  font-size: 0.72rem;
+}
+
+.chat__status {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #3c9a62;
+}
+
+.chat__thread {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 6px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 40%),
+    var(--win-tint);
+}
+
+.chat__bubble {
+  align-self: flex-start;
+  max-width: 92%;
+  padding: 3px 6px;
+  border-radius: 8px 8px 8px 3px;
+  background: #fff;
+  font-size: 0.58rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.chat__bubble--me {
+  align-self: flex-end;
+  border-radius: 8px 8px 3px 8px;
+  background: var(--win-accent);
+  color: #fff;
+}
+
+.chat__input {
+  margin: 0 6px 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.55rem;
+  font-weight: 700;
+  opacity: 0.7;
 }
 
 @media (max-width: 700px) {

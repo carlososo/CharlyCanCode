@@ -4,26 +4,32 @@ import FullscreenShell from '@/components/FullscreenShell.vue'
 import { terminalScript } from '@/config/site'
 
 const shown = ref('')
+const out = ref<HTMLElement | null>(null)
 let timer = 0
 let line = 0
 let col = 0
 let frozen = ''
 
+function scroll() {
+  out.value?.scrollIntoView({ block: 'end' })
+}
+
 function tick() {
   if (line >= terminalScript.length) return
   const current = terminalScript[line] ?? ''
-  if (col <= current.length) {
-    const step = current.startsWith('$') ? 1 : 2
-    col = Math.min(current.length, col + step)
+  if (col < current.length) {
+    col += 1
     const partial = current.slice(0, col)
     shown.value = frozen ? `${frozen}\n${partial}` : partial
-    // Snappy but still readable (~2× prior speed).
-    timer = window.setTimeout(tick, current.startsWith('$') ? 14 : 7)
+    scroll()
+    timer = window.setTimeout(tick, current.startsWith('$') ? 9 : 4)
   } else {
     frozen = frozen ? `${frozen}\n${current}` : current
+    shown.value = frozen
     line += 1
     col = 0
-    timer = window.setTimeout(tick, 70)
+    scroll()
+    timer = window.setTimeout(tick, 8)
   }
 }
 
@@ -41,9 +47,9 @@ onUnmounted(() => {
     <div class="term">
       <div class="term__bar">
         <span class="term__dots" aria-hidden="true"><i /><i /><i /></span>
-        <span class="term__name">carlos@desk:~</span>
+        <span class="term__name">charly@desk:~</span>
       </div>
-      <pre class="term__out">{{ shown }}</pre>
+      <pre ref="out" class="term__out">{{ shown }}<span class="caret" aria-hidden="true">▌</span></pre>
     </div>
   </FullscreenShell>
 </template>
@@ -51,6 +57,8 @@ onUnmounted(() => {
 <style scoped>
 .term {
   flex: 1;
+  min-height: 0;
+  height: calc(100dvh - 4.75rem);
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -92,12 +100,24 @@ onUnmounted(() => {
 
 .term__out {
   flex: 1;
+  min-height: 0;
   margin: 0;
   padding: 1.25rem 1.35rem 2rem;
+  overflow: auto;
   white-space: pre-wrap;
   word-break: break-word;
   font-size: clamp(0.85rem, 1.6vw, 1.05rem);
   line-height: 1.55;
   color: #d2e7d8;
+}
+
+.caret {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 </style>

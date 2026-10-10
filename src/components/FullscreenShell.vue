@@ -1,12 +1,26 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
 defineProps<{
   title: string
   eyebrow?: string
 }>()
+
+const route = useRoute()
+const transitionName = computed(() => {
+  const names: Record<string, string> = {
+    terminal: 'win-terminal',
+    explorer: 'win-explorer',
+    browser: 'win-browser',
+    tips: 'win-tips',
+  }
+  return names[String(route.name)] ?? 'none'
+})
 </script>
 
 <template>
-  <div class="fs">
+  <div class="fs" :style="{ 'view-transition-name': transitionName }">
     <header class="fs__chrome">
       <RouterLink class="fs__back" to="/">← Volver al escritorio</RouterLink>
       <div class="fs__meta">

@@ -1,3 +1,4 @@
+import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import DeskView from '@/views/DeskView.vue'
 
@@ -45,6 +46,34 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0 }
   },
+})
+
+let finishMorph: (() => void) | null = null
+
+router.afterEach(() => {
+  const finish = finishMorph
+  finishMorph = null
+  if (!finish) return
+  nextTick(() => nextTick(finish))
+})
+
+router.beforeEach((to, from) => {
+  const morph = from.name === 'desk' || to.name === 'desk'
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!morph || reduced || from.name === to.name || !document.startViewTransition) return
+
+  return new Promise<void>((resolve) => {
+    document.startViewTransition(() => {
+      return new Promise<void>((done) => {
+        const timer = window.setTimeout(done, 1200)
+        finishMorph = () => {
+          window.clearTimeout(timer)
+          done()
+        }
+        resolve()
+      })
+    })
+  })
 })
 
 export default router

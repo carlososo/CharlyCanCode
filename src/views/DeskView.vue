@@ -1,7 +1,37 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
 import DeskSurface from '@/components/DeskSurface.vue'
 import Monito from '@/components/Monito.vue'
 import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
+import { useMonitorPointer } from '@/composables/useMonitorPointer'
+
+const monitor = ref<{ screen: HTMLElement | null } | null>(null)
+const { nx, ny } = useMonitorPointer(() => monitor.value?.screen ?? null)
+
+const words = ['Code', 'Play', 'Code', 'Debug', 'Code', 'Stream']
+const verb = ref('Code')
+let timer = 0
+let word = 0
+
+function tick() {
+  const next = words[word % words.length] ?? 'Play'
+  const current = verb.value
+  if (current === next) {
+    word += 1
+    timer = window.setTimeout(tick, current === 'Code' ? 1800 : 1100)
+    return
+  }
+  verb.value = next.startsWith(current) ? next.slice(0, current.length + 1) : current.slice(0, -1)
+  timer = window.setTimeout(tick, next.startsWith(current) ? 90 : 50)
+}
+
+onMounted(() => {
+  timer = window.setTimeout(tick, 900)
+})
+
+onUnmounted(() => {
+  window.clearTimeout(timer)
+})
 </script>
 
 <template>
@@ -14,15 +44,14 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
     </div>
 
     <header class="desk__brand">
-      <h1 class="desk__name">Carlos</h1>
-      <p class="desk__line">Mi escritorio vivo: abre una ventana a pantalla completa.</p>
+      <h1 class="desk__name">Charly Can <span class="desk__verb">{{ verb }}</span></h1>
     </header>
 
     <section class="desk__stage" aria-label="Escena del escritorio">
-      <UltrawideMonitor class="desk__monitor" />
+      <UltrawideMonitor ref="monitor" class="desk__monitor" />
       <DeskSurface class="desk__board" />
       <div class="desk__character">
-        <Monito />
+        <Monito :nx="nx" :ny="ny" />
       </div>
     </section>
   </main>
@@ -100,13 +129,20 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 
 .desk__name {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: Poppins, sans-serif;
+  font-weight: 100;
   font-size: clamp(2.8rem, 8vw, 5.5rem);
   line-height: 0.95;
   letter-spacing: -0.03em;
   color: var(--brand);
   text-shadow: 0 8px 0 rgba(255, 255, 255, 0.35);
+  padding-bottom: 3rem;
+}
+
+.desk__verb {
+  display: inline-block;
+  min-width: 6.2ch;
+  text-align: left;
 }
 
 .desk__line {
@@ -123,7 +159,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: rise 320ms 40ms ease-out both;
+  animation: stage-in 320ms 40ms ease-out both;
 }
 
 .desk__monitor {
@@ -139,7 +175,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 .desk__character {
   position: relative;
   z-index: 3;
-  margin-top: -3.5rem;
+  margin-top: -10.5rem;
   animation: bob 3.2s ease-in-out infinite;
 }
 
@@ -153,6 +189,15 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   }
 }
 
+@keyframes stage-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -160,7 +205,6 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -176,7 +220,7 @@ import UltrawideMonitor from '@/components/UltrawideMonitor.vue'
 
 @media (max-width: 700px) {
   .desk__character {
-    margin-top: -2.5rem;
+    margin-top: -6rem;
   }
 }
 </style>

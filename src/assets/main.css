@@ -42,3 +42,12 @@ a {
 .font-display {
   font-family: var(--font-display);
 }
+
+/* La ventana del monitor crece hasta la página. Tope: 450ms. */
+::view-transition-group(*),
+::view-transition-image-pair(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 450ms !important;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
