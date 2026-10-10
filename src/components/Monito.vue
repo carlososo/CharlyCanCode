@@ -26,26 +26,25 @@ const { rotateY, rotateX, sway } = useHeadTracking(root)
         <rect x="122" y="88" width="36" height="24" rx="10" fill="#1e6f9f" />
         <rect x="126" y="93" width="28" height="12" rx="6" fill="#ff7a59" />
 
-        <!-- Asiento óvalo simple bajo el cuerpo -->
-        <ellipse cx="140" cy="246" rx="17" ry="8" fill="#1e6f9f" />
+        <!-- Asiento ≤ torso (no sobresale a los lados) -->
+        <ellipse cx="140" cy="248" rx="14" ry="7" fill="#1e6f9f" />
 
-        <!-- Torso alto: cubre flancos del respaldo (sin lóbulos azules) -->
-        <ellipse cx="140" cy="192" rx="28" ry="40" fill="#3d2918" />
-        <ellipse cx="140" cy="200" rx="20" ry="26" fill="#4a3220" />
+        <!-- Torso alto: cubre flancos del respaldo y empalma con el pelo -->
+        <ellipse cx="140" cy="188" rx="28" ry="44" fill="#3d2918" />
+        <ellipse cx="140" cy="198" rx="20" ry="28" fill="#4a3220" />
 
-        <!-- Una sola masa de pelo (un fill); orejas a media altura -->
+        <!-- Masa única de pelo que llega al torso; orejas a media altura -->
         <g
           class="monito__head"
           :style="{
             transform: `translate(${rotateY * 1.1}px, ${rotateX * 0.85}px) rotate(${rotateY * 0.35}deg)`,
           }"
         >
-          <rect x="133" y="152" width="14" height="14" rx="4" fill="#e8b48a" />
-          <ellipse class="monito__hair" cx="140" cy="126" rx="33" ry="42" fill="#2a1a12" />
-          <ellipse cx="109" cy="128" rx="5" ry="8" fill="#e8b48a" />
-          <ellipse cx="171" cy="128" rx="5" ry="8" fill="#e8b48a" />
+          <ellipse class="monito__hair" cx="140" cy="130" rx="32" ry="46" fill="#2a1a12" />
+          <ellipse cx="110" cy="130" rx="5" ry="8" fill="#e8b48a" />
+          <ellipse cx="170" cy="130" rx="5" ry="8" fill="#e8b48a" />
           <path
-            d="M132 92 C137 84 145 84 150 92 C145 88 137 88 132 92 Z"
+            d="M132 94 C137 86 145 86 150 94 C145 90 137 90 132 94 Z"
             fill="#1a100c"
           />
         </g>
