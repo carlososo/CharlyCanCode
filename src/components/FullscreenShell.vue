@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
 defineProps<{
@@ -8,6 +9,7 @@ defineProps<{
 }>()
 
 const route = useRoute()
+const { t } = useI18n()
 const transitionName = computed(() => {
   const names: Record<string, string> = {
     terminal: 'win-terminal',
@@ -22,7 +24,7 @@ const transitionName = computed(() => {
 <template>
   <div class="fs" :style="{ 'view-transition-name': transitionName }">
     <header class="fs__chrome">
-      <RouterLink class="fs__back" to="/">← Volver al escritorio</RouterLink>
+      <RouterLink class="fs__back" to="/">{{ t('back') }}</RouterLink>
       <div class="fs__meta">
         <p v-if="eyebrow" class="fs__eyebrow">{{ eyebrow }}</p>
         <h1 class="fs__title font-display">{{ title }}</h1>

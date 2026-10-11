@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import FullscreenShell from '@/components/FullscreenShell.vue'
 import { terminalScript } from '@/config/site'
+
+const { t } = useI18n()
 
 const shown = ref('')
 const out = ref<HTMLElement | null>(null)
@@ -18,18 +21,19 @@ function tick() {
   if (line >= terminalScript.length) return
   const current = terminalScript[line] ?? ''
   if (col < current.length) {
-    col += 1
+    const command = current.startsWith('$')
+    col = Math.min(current.length, col + (command ? 1 : 2))
     const partial = current.slice(0, col)
     shown.value = frozen ? `${frozen}\n${partial}` : partial
     scroll()
-    timer = window.setTimeout(tick, current.startsWith('$') ? 9 : 4)
+    timer = window.setTimeout(tick, 4)
   } else {
     frozen = frozen ? `${frozen}\n${current}` : current
     shown.value = frozen
     line += 1
     col = 0
     scroll()
-    timer = window.setTimeout(tick, 8)
+    timer = window.setTimeout(tick, 4)
   }
 }
 
@@ -43,7 +47,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <FullscreenShell title="Sobre mí" eyebrow="Terminal · bash">
+  <FullscreenShell :title="t('about')" eyebrow="Terminal · bash">
     <div class="term">
       <div class="term__bar">
         <span class="term__dots" aria-hidden="true"><i /><i /><i /></span>
@@ -62,7 +66,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   margin: 0;
-  background: #0b0f14;
+  background: #300a24;
   font-family: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', ui-monospace, monospace;
 }
 
@@ -71,7 +75,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.75rem;
   padding: 0.55rem 0.9rem;
-  background: #151b24;
+  background: #240818;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   font-size: 0.8rem;
   color: #9aa8b8;
@@ -108,7 +112,7 @@ onUnmounted(() => {
   word-break: break-word;
   font-size: clamp(0.85rem, 1.6vw, 1.05rem);
   line-height: 1.55;
-  color: #d2e7d8;
+  color: #eeeeec;
 }
 
 .caret {

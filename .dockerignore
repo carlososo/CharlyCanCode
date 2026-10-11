@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+.git
+.cursor
+.vscode
+coverage
+*.log
+*.local
+__screenshots__

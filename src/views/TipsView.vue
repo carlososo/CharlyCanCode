@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import FullscreenShell from '@/components/FullscreenShell.vue'
 import { devTips } from '@/config/site'
+
+const { t } = useI18n()
 </script>
 
 <template>
-  <FullscreenShell title="Dev Tips" eyebrow="Ideas 2026 · desarrollo e IA">
+  <FullscreenShell :title="t('tips')" eyebrow="Ideas 2026 · desarrollo e IA">
     <div class="tips">
       <p class="tips__intro">
         Apuntes cortos para trabajar con IA sin perder criterio. Contenido real — no lorem.

@@ -1,0 +1,22 @@
+services:
+  dev:
+    profiles: [dev]
+    build:
+      context: .
+      target: dev
+    ports:
+      - "43123:43123"
+    volumes:
+      - .:/app
+      # ponytail: este volumen no se regenera si cambia package-lock.json. Borrar con `docker compose --profile dev down -v` y volver a levantar.
+      - /app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+
+  prod:
+    profiles: [prod]
+    build:
+      context: .
+      target: prod
+    ports:
+      - "43123:43123"

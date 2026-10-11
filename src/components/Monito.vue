@@ -2,7 +2,11 @@
 import { ref } from 'vue'
 import { useHeadTracking } from '@/composables/useHeadTracking'
 
-const props = withDefaults(defineProps<{ nx?: number; ny?: number }>(), { nx: 0, ny: 0 })
+const props = withDefaults(defineProps<{ nx?: number; ny?: number; seated?: boolean }>(), {
+  nx: 0,
+  ny: 0,
+  seated: true,
+})
 
 const root = ref<HTMLElement | null>(null)
 const { rotateY, sway } = useHeadTracking(root)
@@ -20,19 +24,30 @@ const { rotateY, sway } = useHeadTracking(root)
         <circle cx="125" cy="198" r="3" fill="#111" />
         <line x1="100" y1="160" x2="100" y2="195" stroke="#333" stroke-width="6" />
 
-        <rect x="73" y="160" width="12" height="35" fill="#1E90FF" rx="2" />
-        <path d="M73 195 L63 202 L73 202 Z" fill="#ffffff" />
-        <rect x="67" y="200" width="18" height="3" fill="#6eb4df" />
+        <g class="monito__person" :class="{ 'is-in': props.seated }">
+          <rect x="73" y="160" width="12" height="35" fill="#1E90FF" rx="2" />
+          <path d="M73 195 L63 202 L73 202 Z" fill="#ffffff" />
+          <rect x="67" y="200" width="18" height="3" fill="#6eb4df" />
 
-        <rect x="115" y="160" width="12" height="35" fill="#1E90FF" rx="2" />
-        <path d="M127 195 L137 202 L127 202 Z" fill="#ffffff" />
-        <rect x="115" y="200" width="18" height="3" fill="#6eb4df" />
+          <rect x="115" y="160" width="12" height="35" fill="#1E90FF" rx="2" />
+          <path d="M127 195 L137 202 L127 202 Z" fill="#ffffff" />
+          <rect x="115" y="200" width="18" height="3" fill="#6eb4df" />
+        </g>
 
         <rect x="65" y="150" width="70" height="12" fill="#111" rx="4" />
         <rect x="70" y="152" width="60" height="4" fill="#6eb4df" rx="1" />
 
         <!-- Nuca: queda detrás del respaldo -->
-        <rect x="94" y="55" width="12" height="15" fill="#e8b48a" rx="2" />
+        <rect
+          class="monito__person"
+          :class="{ 'is-in': props.seated }"
+          x="94"
+          y="55"
+          width="12"
+          height="15"
+          fill="#e8b48a"
+          rx="2"
+        />
 
         <path
           d="M75 60 L63 85 L66 120 L65 150 L135 150 L134 120 L137 85 L125 60 Z"
@@ -64,15 +79,18 @@ const { rotateY, sway } = useHeadTracking(root)
         <rect x="140" y="125" width="14" height="6" fill="#111" rx="1" />
         <line x1="147" y1="131" x2="147" y2="150" stroke="#333" stroke-width="4" />
 
-        <g class="monito__arm">
+        <!-- Mano izquierda sobre el teclado; el antebrazo sale del apoyabrazos como el derecho -->
+        <g class="monito__arm monito__person" :class="{ 'is-in': props.seated }">
           <rect x="48" y="95" width="19" height="12" fill="#1E90FF" rx="2" />
-          <rect x="48" y="105" width="10" height="20" fill="#1E90FF" rx="2" />
           <circle cx="53" cy="105" r="5" fill="#1E90FF" />
-          <rect x="48" y="122" width="10" height="5" fill="#f0c4a0" rx="1" />
+          <g transform="translate(53 105) rotate(-14) translate(-53 -105)">
+            <rect x="44" y="57" width="18" height="12" rx="6" fill="#f0c4a0" />
+            <rect x="47" y="67" width="12" height="38" rx="5" fill="#1E90FF" />
+          </g>
         </g>
 
         <!-- Mano derecha: el mouse es la mano; solo el antebrazo se inclina -->
-        <g class="monito__arm">
+        <g class="monito__arm monito__person" :class="{ 'is-in': props.seated }">
           <rect x="133" y="95" width="22" height="12" rx="4" fill="#1E90FF" />
           <circle cx="154" cy="101" r="5.5" fill="#1E90FF" />
           <g
@@ -95,7 +113,8 @@ const { rotateY, sway } = useHeadTracking(root)
         </g>
 
         <g
-          class="monito__head"
+          class="monito__head monito__person"
+          :class="{ 'is-in': props.seated }"
           :style="{
             transform: `rotate(${(rotateY * 0.85 + sway).toFixed(2)}deg)`,
           }"
@@ -141,6 +160,15 @@ const { rotateY, sway } = useHeadTracking(root)
 .monito__head {
   transform-box: fill-box;
   transform-origin: 50% 100%;
+}
+
+.monito__person {
+  opacity: 0;
+}
+
+.monito__person.is-in {
+  opacity: 1;
+  transition: opacity 280ms ease;
 }
 
 @media (max-width: 700px) {

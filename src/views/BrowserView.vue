@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import FullscreenShell from '@/components/FullscreenShell.vue'
 import { LINKEDIN_URL } from '@/config/site'
+
+const { t } = useI18n()
 </script>
 
 <template>
-  <FullscreenShell title="Contacto" eyebrow="Navegador">
+  <FullscreenShell :title="t('contact')" :eyebrow="t('browserEyebrow')">
     <div class="br">
       <div class="br__chrome">
         <div class="br__traffic" aria-hidden="true"><i /><i /><i /></div>
@@ -16,16 +19,15 @@ import { LINKEDIN_URL } from '@/config/site'
 
       <main class="br__page">
         <p class="br__kicker font-display">Carlos</p>
-        <h2>¿Hablamos?</h2>
-        <p class="br__lead">
-          Esta página es un stub de contacto. Cuando tengas el perfil listo, el enlace de abajo
-          apuntará a tu LinkedIn real.
-        </p>
+        <h2>{{ t('contactHeadline') }}</h2>
+        <p class="br__lead">{{ t('contactLead') }}</p>
         <a class="br__link" :href="LINKEDIN_URL" target="_blank" rel="noopener noreferrer">
-          Abrir LinkedIn
+          {{ t('contactLink') }}
           <span class="br__href">{{ LINKEDIN_URL }}</span>
         </a>
-        <p class="br__hint">Configurable en <code>src/config/site.ts</code> → <code>LINKEDIN_URL</code>.</p>
+        <p class="br__hint">
+          {{ t('contactHint') }} <code>src/config/site.ts</code> → <code>LINKEDIN_URL</code>.
+        </p>
       </main>
     </div>
   </FullscreenShell>

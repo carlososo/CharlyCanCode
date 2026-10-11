@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import FullscreenShell from '@/components/FullscreenShell.vue'
 import { projects } from '@/config/site'
+
+const { t } = useI18n()
 
 const selectedId = ref<string | null>(null)
 
@@ -17,18 +20,18 @@ function closeDetail() {
 </script>
 
 <template>
-  <FullscreenShell title="Proyectos" eyebrow="Explorer · documentos">
+  <FullscreenShell :title="t('projects')" :eyebrow="t('explorerEyebrow')">
     <div class="ex">
       <aside class="ex__side">
-        <p class="ex__label">Este PC</p>
-        <button type="button" class="ex__nav is-active">Proyectos</button>
-        <button type="button" class="ex__nav" disabled>Archivos</button>
-        <button type="button" class="ex__nav" disabled>Escritorio</button>
+        <p class="ex__label">{{ t('pc') }}</p>
+        <button type="button" class="ex__nav is-active">{{ t('projects') }}</button>
+        <button type="button" class="ex__nav" disabled>{{ t('files') }}</button>
+        <button type="button" class="ex__nav" disabled>{{ t('desktop') }}</button>
       </aside>
 
       <section class="ex__main">
         <header class="ex__toolbar">
-          <span>C:\Users\carlos\Proyectos</span>
+          <span>{{ t('projectsPath') }}</span>
         </header>
 
         <div v-if="!selected" class="ex__grid">
@@ -48,11 +51,11 @@ function closeDetail() {
         </div>
 
         <article v-else class="ex__detail">
-          <button type="button" class="ex__back" @click="closeDetail">← Carpeta</button>
+          <button type="button" class="ex__back" @click="closeDetail">{{ t('folder') }}</button>
           <h2 class="font-display">{{ selected.name }}</h2>
           <p class="ex__stack">{{ selected.stack }}</p>
           <p class="ex__summary">{{ selected.summary }}</p>
-          <p class="ex__note">Stub hasta tener ficha real del proyecto.</p>
+          <p class="ex__note">{{ t('projectNote') }}</p>
         </article>
       </section>
     </div>

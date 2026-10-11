@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/** Warm complementary desk under the soft-blue scene. */
+defineProps<{ lit?: boolean }>()
 </script>
 
 <template>
@@ -9,6 +9,11 @@
         <span /><span /><span />
       </div>
       <div class="desk-board__cup" aria-hidden="true" />
+      <div class="desk-board__lamp" :class="{ 'is-on': lit }" aria-hidden="true">
+        <i class="desk-board__shade" />
+        <i class="desk-board__stem" />
+        <i class="desk-board__foot" />
+      </div>
     </div>
     <div class="desk-board__edge" />
     <div class="desk-board__legs">
@@ -17,6 +22,12 @@
     </div>
     <div class="desk-board__cabinet">
       <i /><i /><i />
+    </div>
+    <div class="desk-board__floor" :class="{ 'is-on': lit }" aria-hidden="true">
+      <i class="desk-board__floor-beam" />
+      <i class="desk-board__floor-shade" />
+      <i class="desk-board__floor-stem" />
+      <i class="desk-board__floor-foot" />
     </div>
   </div>
 </template>
@@ -99,7 +110,7 @@
   position: absolute;
   z-index: 2;
   left: 50%;
-  bottom: 10px;
+  bottom: calc(10px + 1rem);
   width: 17%;
   transform: translateX(-50%);
   height: 13px;
@@ -129,7 +140,7 @@
 .desk-board__cup {
   position: absolute;
   z-index: 2;
-  right: 16%;
+  right: calc(16% + 3rem);
   bottom: 8px;
   width: 22px;
   height: 18px;
@@ -159,6 +170,123 @@
   border: 2px solid #efe6dc;
   border-left: 0;
   border-radius: 0 7px 7px 0;
+}
+
+.desk-board__lamp {
+  position: absolute;
+  z-index: 3;
+  left: 8%;
+  bottom: 4px;
+  width: 36px;
+  height: 54px;
+  pointer-events: none;
+}
+
+.desk-board__shade {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 32px;
+  height: 16px;
+  background: #fff;
+  clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+}
+
+.desk-board__stem {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+  background: #6d655c;
+}
+
+.desk-board__foot {
+  position: absolute;
+  bottom: 0;
+  left: 4px;
+  width: 28px;
+  height: 6px;
+  border-radius: 4px;
+  background: #3c3832;
+}
+
+.desk-board__lamp.is-on .desk-board__shade {
+  background: linear-gradient(180deg, #fff1c9, #ffb347);
+  box-shadow: 0 0 16px 4px rgba(255, 186, 80, 0.9);
+}
+
+.desk-board__lamp.is-on::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  width: 220px;
+  height: 160px;
+  transform: translate(-40%, -8%);
+  background: radial-gradient(ellipse at 40% 20%, rgba(255, 206, 120, 0.55), rgba(255, 170, 70, 0.12) 46%, transparent 72%);
+  pointer-events: none;
+}
+
+.desk-board__floor {
+  position: absolute;
+  z-index: 2;
+  right: calc(-6rem - 30px);
+  bottom: -64px;
+  width: 26px;
+  height: 190px;
+  pointer-events: none;
+}
+
+.desk-board__floor-shade {
+  position: absolute;
+  top: 0;
+  left: -29px;
+  width: 84px;
+  height: 68px;
+  background: #fff;
+  clip-path: polygon(16% 0, 84% 0, 100% 100%, 0 100%);
+}
+
+.desk-board__floor-stem {
+  position: absolute;
+  top: 68px;
+  left: 11px;
+  width: 4px;
+  height: 115px;
+  border-radius: 2px;
+  background: #6d655c;
+}
+
+.desk-board__floor-foot {
+  position: absolute;
+  bottom: 0;
+  left: -2px;
+  width: 30px;
+  height: 7px;
+  border-radius: 4px;
+  background: #3c3832;
+}
+
+.desk-board__floor-beam {
+  display: none;
+}
+
+.desk-board__floor.is-on .desk-board__floor-shade {
+  background: linear-gradient(180deg, #fff1c9, #ffb347);
+}
+
+.desk-board__floor.is-on .desk-board__floor-beam {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 160px;
+  height: 179px;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: linear-gradient(to bottom, rgba(255, 214, 140, 0.62), rgba(255, 176, 70, 0.16) 68%, transparent);
 }
 
 .desk-board__cabinet i::after {
